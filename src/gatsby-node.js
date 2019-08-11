@@ -30,6 +30,7 @@ export async function sourceNodes ({ actions, createNodeId, createContentDigest 
 	const contacts = await api.contacts(requester);
 	const categories = await api.categories(requester);
 	const tags = await api.tags(requester);
+	const snippets = await api.snippets(requester);
 
 	pages.forEach(page => {
 		const nodeContent = JSON.stringify(page);
@@ -46,6 +47,22 @@ export async function sourceNodes ({ actions, createNodeId, createContentDigest 
 		const node = Object.assign({}, page, nodeMeta);
 		createNode(node);
 	});
+
+	snippets.forEach(snippet => {
+		const nodeContent = JSON.stringify(snippet);
+		const nodeMeta = {
+			id: createNodeId(`sulu-snippet-${snippet.id}`),
+			parent: null,
+			children: [],
+			internal: {
+				type: `SuluSnippet`,
+				content: nodeContent,
+				contentDigest: createContentDigest(snippet)
+			}
+		};
+		const node = Object.assign({}, snippet, nodeMeta);
+		createNode(node);
+	})
 
 	media.forEach(mediaItem => {
 		const nodeContent = JSON.stringify(mediaItem);
