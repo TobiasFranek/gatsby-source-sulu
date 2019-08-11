@@ -1,0 +1,40 @@
+{
+  "name": "gatsby-source-sulu",
+  "version": "0.0.1",
+  "description": "A Gatsby source plugin for the Sulu CMS (https://sulu.io/de)",
+  "author": "Tobias Franek <tobias.franek@gmail.com> (https://tfranek.net)",
+  "bugs": {
+    "url": "https://github.com/TobiasFranek/gatsby-source-sulu/issues"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.5.5",
+    "node-fetch": "^2.6.0"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-source",
+    "gatsby-plugin",
+    "sulu cms",
+    "sulu"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TobiasFranek/gatsby-source-sulu"
+  },
+  "scripts": {
+    "build": "babel ./src --out-dir ./",
+    "watch": "babel -w ./src --out-dir .",
+    "prepare": "cross-env NODE_ENV=production npm run build"
+  },
+  "peerDependencies": {
+    "gatsby": ">2.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.5",
+    "babel-preset-gatsby-package": "^0.1.2",
+    "cross-env": "^5.2.0"
+  },
+  "license": "MIT"
+
+}
