@@ -31,6 +31,7 @@ export async function sourceNodes ({ actions, createNodeId, createContentDigest 
 	const categories = await api.categories(requester);
 	const tags = await api.tags(requester);
 	const snippets = await api.snippets(requester);
+	const analytics = await api.analytics(requester);
 
 	pages.forEach(page => {
 		const nodeContent = JSON.stringify(page);
@@ -47,6 +48,22 @@ export async function sourceNodes ({ actions, createNodeId, createContentDigest 
 		const node = Object.assign({}, page, nodeMeta);
 		createNode(node);
 	});
+	
+	analytics.forEach(analytic => {
+		const nodeContent = JSON.stringify(analytic);
+		const nodeMeta = {
+			id: createNodeId(`sulu-analytics-${analytic.id}`),
+			parent: null,
+			children: [],
+			internal: {
+				type: `SuluAnalytics`,
+				content: nodeContent,
+				contentDigest: createContentDigest(analytic)
+			}
+		};
+		const node = Object.assign({}, analytic, nodeMeta);
+		createNode(node);
+	})
 
 	snippets.forEach(snippet => {
 		const nodeContent = JSON.stringify(snippet);

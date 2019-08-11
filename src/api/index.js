@@ -4,6 +4,7 @@ import contacts from './contacts';
 import categories from './categories';
 import tags from './tags';
 import snippets from './snippets';
+import analytics from './analytics';
 
 export {
     pages,
@@ -11,5 +12,6 @@ export {
     contacts,
     categories,
     tags,
-    snippets
+    snippets,
+    analytics
 }
