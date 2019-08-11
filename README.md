@@ -128,3 +128,17 @@ query MyQuery {
   }
 }
 ```
+
+### Analytics
+
+```
+query MyQuery {
+  allSuluAnalytics {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}
+```
