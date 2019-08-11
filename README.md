@@ -114,3 +114,17 @@ query MyQuery {
   }
 }
 ```
+
+### Snippets
+
+```
+query MyQuery {
+  allSuluSnippet {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}
+```
