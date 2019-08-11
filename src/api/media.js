@@ -12,7 +12,7 @@ export function mediaMemoize() {
                 const metadata = {
                     categories: 'category_selection'
                 }
-                cache.push(await resolveDependencies(await requester.get('/media/' + mediaIds[key], 'api', {}, ['flat=true', 'limit=10000'], true), metadata, requester))
+                cache.push(await resolveDependencies(await requester.get('/media/' + mediaIds[key], 'api', {}, ['flat=true'], true), metadata, requester))
             }
         } 
         
