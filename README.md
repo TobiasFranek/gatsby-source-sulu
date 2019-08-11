@@ -8,7 +8,7 @@ This is a Gatsby source plugin for Sulu CMS, it is still under heavy development
 
 ## Configuration
 
-Unfortunately Sulu CMS does not allow logins that are not 'same-origin', so you will have to configure an additonal auth method that is token based in your symfony/sulu codebase. In the configuration you can then add your **authURL** which is your login_check endpoint and **authToken** which is the name of the token field where the token is stored, additonally you can configure how it will be passed to the api with the **authType** field:
+Unfortunately Sulu CMS does not allow logins that are not 'same-origin' (or atleast i don't know how), so you will have to configure an additonal auth method that is token based in your symfony/sulu codebase. In the configuration you can then add your **authURL** which is your login_check endpoint and **authToken** which is the name of the token field where the token is stored, additonally you can configure how it will be passed to the api with the **authType** field:
 
 * type = 'header', with the 'Authorization' header
 ```
