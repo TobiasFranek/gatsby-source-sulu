@@ -18,7 +18,7 @@ export function getElementByString(element, key) {
 }
 
 export function extractTypes(types) {
-    const result = {};
+    let result = {};
 
     for (let key in types) {
         switch (types[key].type) {
@@ -38,7 +38,7 @@ export function extractTypes(types) {
             case 'section':
                 const section = extractTypes(types[key].items);
 
-                result[key] = section;
+                result = {...result, ...section};
                 break;
 
             default: 

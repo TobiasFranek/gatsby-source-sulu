@@ -9,7 +9,7 @@ export default async function resolveDependencies(content, schema, requester) {
             const type = schema[key].type ? schema[key].type : schema[key];
             switch (type) {
                 case 'section':
-                    content[key] = await resolveDependencies(content[key], schema[key]);
+                    content[key] = await resolveDependencies(content[key], schema[key].children);
                     break;
                 case 'block':
                     let temp = [];
