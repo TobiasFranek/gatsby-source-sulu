@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.5.5",
+    "gatsby-source-filesystem": "^2.1.9",
+    "mime-types": "^2.1.24",
     "node-fetch": "^2.6.0"
   },
   "keywords": [
@@ -36,5 +38,4 @@
     "cross-env": "^5.2.0"
   },
   "license": "MIT"
-
 }

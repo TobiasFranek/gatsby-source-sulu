@@ -19,6 +19,8 @@ Authorization: <authType.name> <yourtoken>
 http://localhost/admin/api/nodes?<authType.name>=<yourtoken>
 ```
 
+the mediaURL is often the root directory, but can be different depending on your server configuration.
+
 ### sample config
 ```javascript
 resolve: 'gatsby-source-sulu',
@@ -26,6 +28,7 @@ options: {
     apiURL: 'http://localhost/admin/api',
     authURL: 'http://localhost/admin/jwt/login',
     metadataURL: 'http://localhost/admin/metadata',
+    mediaURL: 'http://localhost'
     authToken: 'token',
     webspace: 'webspacename',
     locale: 'en',

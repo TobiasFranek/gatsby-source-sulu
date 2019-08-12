@@ -1,11 +1,14 @@
 import { Request } from './util/util';
 import * as api from './api';
 import * as metadata from './api/metadata';
+import { createRemoteFileNode } from 'gatsby-source-filesystem';
+import mime from 'mime-types';
 
-export async function sourceNodes ({ actions, createNodeId, createContentDigest }, { 
+export async function sourceNodes ({ actions, createNodeId, createContentDigest, store, cache }, { 
 	apiURL = 'http://localhost/admin/api',
 	authURL = 'http://localhost/admin/jwt/login',
 	metadataURL = 'http://localhost/admin/metadata',
+	mediaURL = 'http://localhost/media',
 	authToken = 'token',
 	webspace = 'webspace',
 	locale = 'en',
@@ -18,7 +21,7 @@ export async function sourceNodes ({ actions, createNodeId, createContentDigest 
 		password: 'admin'
 	}
  }) {
-	const { createNode } = actions;
+	const { createNode, createNodeField } = actions;
 
 	const requester = new Request(authType, apiURL, authURL, metadataURL, webspace, locale);
 
@@ -82,10 +85,11 @@ export async function sourceNodes ({ actions, createNodeId, createContentDigest 
 		createNode(node);
 	})
 
-	media.forEach(mediaItem => {
+	for(const mediaItem of media) {
 		const nodeContent = JSON.stringify(mediaItem);
+		const nodeId = createNodeId(`sulu-media-${mediaItem.id}`)
 		const nodeMeta = {
-			id: createNodeId(`sulu-media-${mediaItem.id}`),
+			id: nodeId,
 			parent: null,
 			children: [],
 			internal: {
@@ -94,9 +98,32 @@ export async function sourceNodes ({ actions, createNodeId, createContentDigest 
 				contentDigest: createContentDigest(mediaItem)
 			}
 		};
+
 		const node = Object.assign({}, mediaItem, nodeMeta);
 		createNode(node);
-	});
+
+		let fileNode = await createRemoteFileNode({
+			url: mediaURL + mediaItem.url,
+			parentNodeId: nodeId,
+			cache,
+			store,
+			createNode,
+			createNodeId,
+			ext: `.${mime.extension(mediaItem.mimeType)}`
+		});
+
+		await createNodeField({
+			node: fileNode,
+			name: 'suluMedia',
+			value: 'true'
+		});
+
+		await createNodeField({
+			node: fileNode,
+			name: 'id',
+			value: mediaItem.id
+		})
+	};
 
 	contacts.forEach(contact => {
 		const nodeContent = JSON.stringify(contact);
