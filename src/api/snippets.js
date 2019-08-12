@@ -1,4 +1,4 @@
-import { pageSeo, pageExcerpt } from './metadata/index';
+import { pageSeo, pageExcerpt, snippetMetadata } from './metadata/index';
 import resolveDependencies from '../resolve/index';
 
 export function snippetsMemoize() {
@@ -21,11 +21,7 @@ export function snippetsMemoize() {
                     }
                 }
 
-                const metadata = {
-                    author: 'contact',
-                    changer: 'contact',
-                    creator: 'contact'
-                }
+                const metadata = await snippetMetadata(requester, snippets[snippetKey].template);
 
                 snippets[snippetKey].ext.seo = await resolveDependencies(snippets[snippetKey].ext.seo, seo, requester);
                 snippets[snippetKey].ext.excerpt = await resolveDependencies(snippets[snippetKey].ext.excerpt, excerpt, requester);
