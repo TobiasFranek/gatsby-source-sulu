@@ -115,6 +115,22 @@ query MyQuery {
 }
 ```
 
+### Snippet Metadata
+describes all types of important and autogenereted fields, for example the specific template fields.
+
+```
+query MyQuery {
+  allSuluSnippetMetadata {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}
+```
+
+
 ### Snippets
 
 ```

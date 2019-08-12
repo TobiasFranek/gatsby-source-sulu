@@ -26,6 +26,7 @@ export async function sourceNodes ({ actions, createNodeId, createContentDigest 
 
 	const pages = await api.pages(requester);
 	const metadataPage = await metadata.pageMetadata(requester);
+	const metadataSnippet = await metadata.snippetMetadata(requester);
 	const media = await api.media(requester);
 	const contacts = await api.contacts(requester);
 	const categories = await api.categories(requester);
@@ -161,6 +162,21 @@ export async function sourceNodes ({ actions, createNodeId, createContentDigest 
 		createNode(node);
 	}
 
+	for (let metadataKey in metadataSnippet) {
+		const nodeContent = JSON.stringify({...metadataSnippet[metadataKey], ...{template: metadataKey}});
+		const nodeMeta = {
+			id: createNodeId(`sulu-snippet-metadata-${metadataKey}`),
+			parent: null,
+			children: [],
+			internal: {
+				type: `SuluSnippetMetadata`,
+				content: nodeContent,
+				contentDigest: createContentDigest({...metadataSnippet[metadataKey], ...{template: metadataKey}})
+			}
+		};
+		const node = Object.assign({}, {...metadataSnippet[metadataKey], ...{template: metadataKey}}, nodeMeta);
+		createNode(node);
+	}
 
 	return;
 };
