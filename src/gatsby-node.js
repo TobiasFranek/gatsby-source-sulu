@@ -122,6 +122,12 @@ export async function sourceNodes ({ actions, createNodeId, createContentDigest,
 			node: fileNode,
 			name: 'id',
 			value: mediaItem.id
+		});
+
+		await createNodeField({
+			node: fileNode,
+			name: 'tags',
+			value: mediaItem.tags
 		})
 	};
 
