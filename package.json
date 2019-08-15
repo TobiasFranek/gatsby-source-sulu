@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-sulu",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A Gatsby source plugin for the Sulu CMS (https://sulu.io/de)",
   "author": "Tobias Franek <tobias.franek@gmail.com> (https://tfranek.net)",
   "bugs": {
