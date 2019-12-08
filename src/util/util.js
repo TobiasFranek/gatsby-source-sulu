@@ -87,7 +87,7 @@ export class Request {
         if (request.status === 200) {
             const response = await request.json();
     
-            this.token = getElementByString(response, tokenKey);
+			this.token = getElementByString(response, tokenKey);
         } else {
             return null
         }
@@ -119,6 +119,7 @@ export class Request {
                 headers: defaultHeaders,
             }
         )
+		
 
         if (request.status !== 200) {
             return null;

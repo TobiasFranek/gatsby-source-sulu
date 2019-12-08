@@ -22,7 +22,6 @@ export async function sourceNodes ({ actions, createNodeId, createContentDigest,
 	}
  }) {
 	const { createNode, createNodeField } = actions;
-
 	const requester = new Request(authType, apiURL, authURL, metadataURL, webspace, locale);
 
 	await requester.login(credentials, authToken);

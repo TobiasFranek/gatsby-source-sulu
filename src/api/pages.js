@@ -1,19 +1,37 @@
 import { pageMetadata } from './metadata/index';
 import resolveDependencies from '../resolve/index';
 
+const fetchAllPageIds = async (id = '', requester) => {
+	let response = null;
+	if (id && id !== '') {
+		response = await requester.get('/pages', 'api', {}, [`parentId=${id}`], true, true);
+	} else {
+		response = await requester.get('/pages', 'api', {}, [], true, true);
+	}
+	let ids = [];
+	if (response && response._embedded && response._embedded.pages) {
+		let pages = response._embedded.pages;
+		for (let page of pages) {
+			ids.push(page.id);
+
+			if (page.hasChildren) {
+				ids.push(...await fetchAllPageIds(page.id, requester));
+			}
+		}
+	}
+	
+	return ids;
+}
+
+
 export function pagesMemoize() {
     let cache = {};
     return async function (requester) {
         if (Object.keys(cache).length === 0) {
-            const response = await requester.get('/nodes', 'api', {}, ['flat=true', 'depth=100'], true, true);
-        
-            const root = response.id;
-            const rootChildren = response['_embedded'].pages.map((page) => page.id);
-        
-            const pageIds = [root, ...rootChildren];
-        
-            const pages = [];
-        
+			const pageIds = await fetchAllPageIds('', requester);
+            
+			const pages = [];
+			
             for (let id in pageIds) {
                 const response =  await requester.get('/pages/' + pageIds[id], 'api', {}, [], true, true);
                
